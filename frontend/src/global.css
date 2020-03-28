@@ -13,6 +13,10 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
+h1 {
+  color: #000000bf;
+}
+
 input, button, textarea {
   font: 400 14px Roboto, sans-serif;
 }
@@ -30,7 +34,26 @@ form input {
  padding: 0 24px;
 }
 
-form input:hover {
+.linkTo {
+  display: flex;
+  align-items: center;
+  margin-top:30px;
+  color: #41414d;
+  font-size: 18px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: opacity 0.2s;
+}
+
+.linkTo svg {
+ margin-right: 8px;
+}
+
+.linkTo:hover {
+ opacity: 0.8;
+}
+
+form input:hover,form input:focus {
   border-color: #e02041;
 }
 
