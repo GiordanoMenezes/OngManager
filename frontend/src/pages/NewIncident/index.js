@@ -1,13 +1,40 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 
-import {FiArrowLeft} from 'react-icons/fi';
+import { FiArrowLeft } from 'react-icons/fi';
 
 import './styles.css';
-
 import LogoImg from '../../assets/logo.svg';
+import api from '../../services/api';
 
 export default function NewIncident() {
+
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [value, setValue] = useState('');
+
+  const history = useHistory();
+
+  const salvar = async (evt) => {
+
+    evt.preventDefault();
+
+    const loggedId = localStorage.getItem('ongId');
+
+    const data = { title, description, value };
+
+    try {
+      await api.post('incidents', data, {
+        headers: {
+          Authorization: loggedId,
+        }
+      });
+      history.push('/profile');
+    } catch (err) {
+      alert("Erro ao registrar caso");
+    }
+  }
+
   return (
     <div className="new-incident-container">
       <div className="content">
@@ -20,12 +47,21 @@ export default function NewIncident() {
             Voltar para Casos
       </Link>
         </section>
-        <form>
-          <input type="text" placeholder="Título do caso" />
-          <textarea placeholder="Descrição" />
-          <input type="text" placeholder="Valor em reais" />
-
-         
+        <form onSubmit={salvar}>
+          <input
+            type="text"
+            placeholder="Título do caso"
+            value={title}
+            onChange={e => setTitle(e.target.value)} />
+          <textarea
+            placeholder="Descrição"
+            value={description}
+            onChange={e => setDescription(e.target.value)} />
+          <input
+            type="text"
+            placeholder="Valor em reais"
+            value={value}
+            onChange={e => setValue(e.target.value)} />
           <button className="button" type="submit">Cadastrar</button>
         </form>
       </div>

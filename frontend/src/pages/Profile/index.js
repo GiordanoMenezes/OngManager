@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import './styles.css';
 
@@ -13,6 +13,8 @@ export default function Profile() {
 
   const loggedId = localStorage.getItem('ongId');
   const loggedName = localStorage.getItem('ongName');
+
+  const history = useHistory();
 
   useEffect(() => {
     api.get('incidents/profile', {
@@ -35,6 +37,11 @@ export default function Profile() {
     }
   }
 
+  const handleLogout = () => {
+    localStorage.clear();
+    history.push('/');
+  }
+
   return (
     <div className="profile-container">
       <header>
@@ -42,7 +49,7 @@ export default function Profile() {
         <span>Bem Vinda, {loggedName}</span>
         <Link className="button" to="incidents/new">Cadastrar Novo Caso</Link>
         <button type="button">
-          <FiPower size={18} color="#E02041" />
+          <FiPower onClick={() => handleLogout()} size={18} color="#E02041" />
         </button>
       </header>
       <h1>Casos Cadastrados</h1>
@@ -56,7 +63,7 @@ export default function Profile() {
             <strong>VALOR:</strong>
             <p>{Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(inc.value)}</p>
             <button type="button">
-              <FiTrash2 onClick={()=> deleteItem(inc.id)} size={20} color="#a8a8b3" />
+              <FiTrash2 onClick={() => deleteItem(inc.id)} size={20} color="#a8a8b3" />
             </button>
           </li>
         ))}
