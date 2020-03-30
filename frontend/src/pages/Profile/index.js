@@ -51,7 +51,7 @@ export default function Profile() {
         <button type="button">
           <FiPower onClick={() => handleLogout()} size={18} color="#E02041" />
         </button>
-      </header>
+      </header >
       <h1>Casos Cadastrados</h1>
       <ul>
         {incidents.map(inc => (
@@ -68,6 +68,6 @@ export default function Profile() {
           </li>
         ))}
       </ul>
-    </div>
+    </div >
   );
 }
